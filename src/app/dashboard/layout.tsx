@@ -43,6 +43,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const [authChecked, setAuthChecked] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -50,6 +52,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         window.location.href = "/login";
       } else {
         setAuthChecked(true);
+        setUserEmail(user.email || "");
+        setUserName(user.user_metadata?.full_name || user.email?.split("@")[0] || "User");
       }
     });
   }, []);
@@ -61,8 +65,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
+        <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -70,12 +74,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const isActive = (href: string) =>
     href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
 
+  const initials = userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-5 py-5 border-b border-slate-200">
-        <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full flex-shrink-0" />
-        <span className="text-lg font-bold text-slate-900">ClientFlow</span>
+      <div className="flex items-center gap-2.5 px-5 py-5 border-b border-[#E2E8F0]">
+        <span className="w-2.5 h-2.5 bg-[#2563EB] rounded-full flex-shrink-0" />
+        <span className="text-lg font-[family-name:var(--font-heading)] font-bold text-[#1E293B]">ClientFlow</span>
+      </div>
+
+      {/* User profile */}
+      <div className="px-4 py-4 border-b border-[#E2E8F0]">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-[#2563EB] flex items-center justify-center flex-shrink-0">
+            <span className="text-xs font-semibold text-white">{initials}</span>
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-[#1E293B] truncate">{userName}</p>
+            <p className="text-xs text-[#64748B] truncate">{userEmail}</p>
+          </div>
+        </div>
       </div>
 
       {/* Nav */}
@@ -85,10 +104,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             key={item.href}
             href={item.href}
             onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
               isActive(item.href)
-                ? "bg-emerald-50 text-emerald-700"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-[#DBEAFE] text-[#2563EB] border-l-[3px] border-[#2563EB] -ml-px"
+                : "text-[#64748B] hover:bg-slate-100 hover:text-[#1E293B]"
             }`}
           >
             {item.icon}
@@ -97,11 +116,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         ))}
       </nav>
 
-      {/* Logout */}
-      <div className="px-3 pb-4 border-t border-slate-200 pt-4">
+      {/* Bottom */}
+      <div className="px-3 pb-4 border-t border-[#E2E8F0] pt-4">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:text-red-500 hover:bg-red-50 transition-colors"
+          className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-sm font-medium text-[#64748B] hover:text-red-500 hover:bg-red-50 transition-all duration-200 cursor-pointer"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -110,28 +129,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </svg>
           Logout
         </button>
+        <p className="text-[10px] text-slate-400 mt-3 px-3">ClientFlow v1.0</p>
       </div>
     </div>
   );
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen bg-[#F8FAFC]">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 fixed top-0 left-0 h-full z-30">
+      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-white border-r border-[#E2E8F0] fixed top-0 left-0 h-full z-30">
         <SidebarContent />
       </aside>
 
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden animate-fade-in"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* Mobile sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-slate-50 border-r border-slate-200 z-50 flex flex-col transform transition-transform duration-200 lg:hidden ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-[#E2E8F0] z-50 flex flex-col transform transition-transform duration-200 lg:hidden ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -141,10 +161,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main content */}
       <div className="flex-1 flex flex-col lg:ml-64">
         {/* Mobile top bar */}
-        <header className="lg:hidden flex items-center gap-4 px-4 py-3 border-b border-slate-200 bg-white sticky top-0 z-20">
+        <header className="lg:hidden flex items-center gap-4 px-4 py-3 border-b border-[#E2E8F0] bg-white sticky top-0 z-20">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+            className="p-1.5 rounded-lg text-[#64748B] hover:bg-slate-100 transition-colors cursor-pointer"
             aria-label="Open menu"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -154,12 +174,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </svg>
           </button>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full" />
-            <span className="font-bold text-slate-900">ClientFlow</span>
+            <span className="w-2 h-2 bg-[#2563EB] rounded-full" />
+            <span className="font-[family-name:var(--font-heading)] font-bold text-[#1E293B]">ClientFlow</span>
           </div>
         </header>
 
-        <main className="flex-1 p-6 lg:p-8 bg-white min-h-screen">
+        <main className="flex-1 p-6 lg:p-8 min-h-screen">
           {children}
         </main>
       </div>

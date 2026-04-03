@@ -8,8 +8,8 @@ import type { Project } from "@/lib/types";
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 const STATUS_BADGE: Record<Project["status"], string> = {
-  active: "bg-emerald-50 text-emerald-700",
-  completed: "bg-blue-50 text-blue-700",
+  active: "bg-[#DBEAFE] text-[#2563EB]",
+  completed: "bg-green-50 text-green-700",
   on_hold: "bg-amber-50 text-amber-700",
 };
 
@@ -161,7 +161,7 @@ function ProjectCard({
           </button>
           <Link
             href={`/dashboard/projects/${project.id}`}
-            className="ml-auto flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors font-medium"
+            className="ml-auto flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-[#DBEAFE] text-[#2563EB] hover:bg-blue-200 transition-colors font-medium"
           >
             View
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -307,7 +307,7 @@ function ProjectModal({
               value={form.name}
               onChange={handleChange}
               placeholder="e.g. Website Redesign"
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
             />
           </div>
 
@@ -323,7 +323,7 @@ function ProjectModal({
               value={form.description}
               onChange={handleChange}
               placeholder="Optional project description"
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent resize-none"
             />
           </div>
 
@@ -339,7 +339,7 @@ function ProjectModal({
               value={form.client_name}
               onChange={handleChange}
               placeholder="e.g. Acme Corp"
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
             />
           </div>
 
@@ -354,7 +354,7 @@ function ProjectModal({
                 name="status"
                 value={form.status}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent bg-white"
               >
                 <option value="active">Active</option>
                 <option value="completed">Completed</option>
@@ -374,7 +374,7 @@ function ProjectModal({
                 value={form.budget}
                 onChange={handleChange}
                 placeholder="e.g. 5000"
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
               />
             </div>
           </div>
@@ -390,7 +390,7 @@ function ProjectModal({
               type="date"
               value={form.deadline}
               onChange={handleChange}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
             />
           </div>
 
@@ -406,7 +406,7 @@ function ProjectModal({
             <button
               type="submit"
               disabled={saving}
-              className="px-5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white text-sm font-medium transition-colors"
+              className="px-5 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-60 text-white text-sm font-medium transition-colors"
             >
               {saving ? "Saving…" : isEdit ? "Save changes" : "Create project"}
             </button>
@@ -494,7 +494,7 @@ export default function ProjectsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -511,7 +511,7 @@ export default function ProjectsPage() {
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -544,7 +544,7 @@ export default function ProjectsPage() {
             placeholder="Search projects…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
           />
         </div>
 
@@ -556,7 +556,7 @@ export default function ProjectsPage() {
               onClick={() => setStatusFilter(opt.value)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 statusFilter === opt.value
-                  ? "bg-emerald-500 text-white"
+                  ? "bg-[#2563EB] text-white"
                   : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
               }`}
             >
@@ -582,7 +582,7 @@ export default function ProjectsPage() {
               </p>
               <button
                 onClick={openCreate}
-                className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="12" y1="5" x2="12" y2="19" />

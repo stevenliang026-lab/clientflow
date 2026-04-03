@@ -8,7 +8,7 @@ import type { Project, Task } from "@/lib/types";
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PROJECT_STATUS_BADGE: Record<Project["status"], string> = {
-  active: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  active: "bg-[#DBEAFE] text-[#2563EB] border border-blue-200",
   completed: "bg-blue-50 text-blue-700 border border-blue-200",
   on_hold: "bg-amber-50 text-amber-700 border border-amber-200",
 };
@@ -22,7 +22,7 @@ const PROJECT_STATUS_LABEL: Record<Project["status"], string> = {
 const TASK_STATUS_BADGE: Record<Task["status"], string> = {
   todo: "bg-slate-100 text-slate-600",
   in_progress: "bg-amber-50 text-amber-700",
-  done: "bg-emerald-50 text-emerald-700",
+  done: "bg-[#DBEAFE] text-[#2563EB]",
 };
 
 const TASK_STATUS_LABEL: Record<Task["status"], string> = {
@@ -175,7 +175,7 @@ export default function ProjectDetailPage({
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -186,7 +186,7 @@ export default function ProjectDetailPage({
         <p className="text-slate-600">{projectError ?? "Project not found."}</p>
         <Link
           href="/dashboard/projects"
-          className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+          className="text-sm text-[#1D4ED8] hover:text-[#1D4ED8] font-medium"
         >
           ← Back to Projects
         </Link>
@@ -315,7 +315,7 @@ export default function ProjectDetailPage({
           {totalCount > 0 && (
             <div className="h-2 rounded-full bg-slate-200 overflow-hidden">
               <div
-                className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                className="h-full bg-[#2563EB] rounded-full transition-all duration-300"
                 style={{ width: `${donePercent}%` }}
               />
             </div>
@@ -332,12 +332,12 @@ export default function ProjectDetailPage({
             placeholder="New task title..."
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
           />
           <select
             value={newPriority}
             onChange={(e) => setNewPriority(e.target.value as Task["priority"])}
-            className="border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white"
+            className="border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent bg-white"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -346,7 +346,7 @@ export default function ProjectDetailPage({
           <button
             type="submit"
             disabled={adding || !newTitle.trim()}
-            className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-50 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
           >
             {adding ? (
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin inline-block" />
@@ -408,10 +408,10 @@ export default function ProjectDetailPage({
                 <button
                   onClick={() => handleToggleStatus(task)}
                   aria-label={`Mark as ${TASK_STATUS_CYCLE[task.status]}`}
-                  className="flex-shrink-0 w-5 h-5 rounded border-2 border-slate-300 flex items-center justify-center transition-colors hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-1"
+                  className="flex-shrink-0 w-5 h-5 rounded border-2 border-slate-300 flex items-center justify-center transition-colors hover:border-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-1"
                   style={{
-                    backgroundColor: task.status === "done" ? "#10b981" : undefined,
-                    borderColor: task.status === "done" ? "#10b981" : task.status === "in_progress" ? "#f59e0b" : undefined,
+                    backgroundColor: task.status === "done" ? "#2563EB" : undefined,
+                    borderColor: task.status === "done" ? "#2563EB" : task.status === "in_progress" ? "#F97316" : undefined,
                   }}
                 >
                   {task.status === "done" && (
@@ -429,7 +429,7 @@ export default function ProjectDetailPage({
                     </svg>
                   )}
                   {task.status === "in_progress" && (
-                    <div className="w-2 h-2 rounded-full bg-amber-400" />
+                    <div className="w-2 h-2 rounded-full bg-[#F97316]" />
                   )}
                 </button>
 
